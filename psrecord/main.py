@@ -28,6 +28,9 @@ from __future__ import (unicode_literals, division, print_function,absolute_impo
 import time
 import argparse
 import os
+import psutil
+
+
 children = []
 
 
@@ -36,8 +39,8 @@ def get_pid(name):
     return int(check_output(["pidof",name]))
 
 
-def get_percent(process):
-    return process.cpu_percent()
+def get_percent(process:psutil.Process):
+    return process.cpu_percent()/ psutil.cpu_count()
 
 
 def get_memory(process):
@@ -98,6 +101,7 @@ def main():
             pid = get_pid('target/release/worker')
         
         print("Attaching to process {0}".format(pid))
+        print("cpu count {}".format(psutil.cpu_count()))
         sprocess = None
     except Exception:
         import subprocess
