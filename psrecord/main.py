@@ -228,3 +228,30 @@ def monitor(pid, logfile=None, plot=None, duration=None, interval=None,
             ax.grid()
 
             fig.savefig(plot)
+
+
+if __name__ == '__main__':
+    process_id = 39319
+    log = 'activity.txt'
+    plot = 'plot.png'
+    duration = 60
+    interval = 1
+    include_children = False
+    # Attach to process
+    try:
+        pid = int(process_id)
+        print("Attaching to process {0}".format(pid))
+        sprocess = None
+    except Exception:
+        import subprocess
+        command = process_id
+        print("Starting up command '{0}' and attaching to process"
+              .format(command))
+        sprocess = subprocess.Popen(command, shell=True)
+        pid = sprocess.pid
+
+    monitor(pid, logfile=log, plot=plot, duration=duration,
+            interval=interval, include_children=include_children)
+
+    if sprocess is not None:
+        sprocess.kill()
