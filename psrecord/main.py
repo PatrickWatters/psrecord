@@ -23,14 +23,12 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
-from __future__ import (unicode_literals, division, print_function,
-                        absolute_import)
+from __future__ import (unicode_literals, division, print_function,absolute_import)
 
 import time
 import argparse
 
 children = []
-
 
 def get_percent(process):
     return process.cpu_percent()
@@ -55,35 +53,23 @@ def all_children(pr):
 
     return children
 
-
 def main():
 
-    parser = argparse.ArgumentParser(
-        description='Record CPU and memory usage for a process')
-
-    parser.add_argument('process_id_or_command', type=str,
-                        help='the process id or command')
-
-    parser.add_argument('--log', type=str,
-                        help='output the statistics to a file')
-
-    parser.add_argument('--plot', type=str,
-                        help='output the statistics to a plot')
-
-    parser.add_argument('--duration', type=float,
-                        help='how long to record for (in seconds). If not '
-                             'specified, the recording is continuous until '
-                             'the job exits.')
-
-    parser.add_argument('--interval', type=float,
+    parser = argparse.ArgumentParser( description='Record CPU and memory usage for a process')
+    parser.add_argument("-pid","--pid",default=None, type=str,help='the process id or command')
+    parser.add_argument("-log","--log",default=None, type=str, help='output the statistics to a file')
+    parser.add_argument("-plot","--plot",default=None, type=str, help='output the statistics to a plot')
+    parser.add_argument("-duration","--duration",default=None, type=float,help='how long to record for (in seconds). If not ''specified, the recording is continuous until ''the job exits.')
+    
+    parser.add_argument("-interval","--interval",default=None, type=float,
                         help='how long to wait between each sample (in '
                              'seconds). By default the process is sampled '
                              'as often as possible.')
-
-    parser.add_argument('--include-children',
-                        help='include sub-processes in statistics (results '
-                             'in a slower maximum sampling rate).',
-                        action='store_true')
+    
+    parser.add_argument("-include-children","--include-children",type=bool, action='store_flase',
+                        help='how long to wait between each sample (in '
+                             'seconds). By default the process is sampled '
+                             'as often as possible.')
 
     args = parser.parse_args()
 
@@ -231,6 +217,8 @@ def monitor(pid, logfile=None, plot=None, duration=None, interval=None,
 
 
 if __name__ == '__main__':
+    main()
+    '''
     process_id = 39319
     log = 'activity.txt'
     plot = 'plot.png'
@@ -255,3 +243,4 @@ if __name__ == '__main__':
 
     if sprocess is not None:
         sprocess.kill()
+    '''
