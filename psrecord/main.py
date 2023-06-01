@@ -27,7 +27,7 @@ from __future__ import (unicode_literals, division, print_function,absolute_impo
 
 import time
 import argparse
-
+import os
 children = []
 
 def get_percent(process):
@@ -102,6 +102,9 @@ def monitor(pid, logfile=None, plot=None, duration=None, interval=None,
     start_time = time.time()
 
     if logfile:
+        if os.path.exists(logfile):
+            os.remove(logfile)
+            print('previous log deleted')
         f = open(logfile, 'w')
         f.write("# {0:12s} {1:12s} {2:12s} {3:12s}\n".format(
             'Elapsed time'.center(12),
@@ -186,7 +189,9 @@ def monitor(pid, logfile=None, plot=None, duration=None, interval=None,
         f.close()
 
     if plot:
-
+        if os.path.exists(plot):
+            os.remove(plot)
+            print('previous plot deleted')
         # Use non-interactive backend, to enable operation on headless machines
         import matplotlib.pyplot as plt
         with plt.rc_context({'backend': 'Agg'}):
