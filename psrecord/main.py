@@ -33,7 +33,7 @@ children = []
 
 from subprocess import check_output
 def get_pid(name):
-    return check_output(["pidof",name])
+    return int(check_output(["pidof",name]))
 
 
 def get_percent(process):
