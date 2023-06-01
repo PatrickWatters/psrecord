@@ -58,7 +58,7 @@ def main():
     parser = argparse.ArgumentParser( description='Record CPU and memory usage for a process')
     parser.add_argument("-pid","--pid",default=None, type=str,help='the process id or command')
     parser.add_argument("-log","--log",default='output.txt', type=str, help='output the statistics to a file')
-    parser.add_argument("-plot","--plot",default='plot.txt', type=str, help='output the statistics to a plot')
+    parser.add_argument("-plot","--plot",default='plot.png', type=str, help='output the statistics to a plot')
     parser.add_argument("-duration","--duration",default=None, type=float,help='how long to record for (in seconds). If not ''specified, the recording is continuous until ''the job exits.')
     
     parser.add_argument("-interval","--interval",default=None, type=float,
