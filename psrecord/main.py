@@ -30,6 +30,12 @@ import argparse
 import os
 children = []
 
+
+from subprocess import check_output
+def get_pid(name):
+    return check_output(["pidof",name])
+
+
 def get_percent(process):
     return process.cpu_percent()
 
@@ -65,13 +71,32 @@ def main():
                         help='how long to wait between each sample (in '
                              'seconds). By default the process is sampled '
                              'as often as possible.')
+    parser.add_argument('--include-children',
+                        help='include sub-processes in statistics (results '
+                             'in a slower maximum sampling rate).',
+                        action='store_true')
     
+    parser.add_argument('--distkeygen',
+                        help='include sub-processes in statistics (results '
+                             'in a slower maximum sampling rate).',
+                        action='store_true')
+    parser.add_argument('--distprove',
+                        help='include sub-processes in statistics (results '
+                             'in a slower maximum sampling rate).',
+                        action='store_true')
 
     args = parser.parse_args()
 
     # Attach to process
     try:
         pid = int(args.pid)
+        if args.distkeygen:
+            pid = get_pid('target/release/keygen_dispatcher')
+        elif args.distprove:
+            pid = get_pid('target/release/prove_dispatcher')
+        else:
+            pid = get_pid('target/release/worker')
+        
         print("Attaching to process {0}".format(pid))
         sprocess = None
     except Exception:
@@ -83,7 +108,7 @@ def main():
         pid = sprocess.pid
 
     monitor(pid, logfile=args.log, plot=args.plot, duration=args.duration,
-            interval=args.interval, include_children=False)
+            interval=args.interval, include_children=args.include_children)
 
     if sprocess is not None:
         sprocess.kill()
