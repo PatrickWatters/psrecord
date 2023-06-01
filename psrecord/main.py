@@ -71,12 +71,12 @@ def main():
 
     # Attach to process
     try:
-        pid = int(args.process_id_or_command)
+        pid = int(args.pid)
         print("Attaching to process {0}".format(pid))
         sprocess = None
     except Exception:
         import subprocess
-        command = args.process_id_or_command
+        command = args.pid
         print("Starting up command '{0}' and attaching to process"
               .format(command))
         sprocess = subprocess.Popen(command, shell=True)
