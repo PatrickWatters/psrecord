@@ -40,7 +40,8 @@ def get_pid(name):
 
 
 def get_percent(process:psutil.Process):
-    return process.cpu_percent()/ psutil.cpu_count()
+    #return process.cpu_percent()/ psutil.cpu_count()
+    return process.cpu_percent()
 
 
 def get_memory(process):
