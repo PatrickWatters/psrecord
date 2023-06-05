@@ -92,14 +92,15 @@ def main():
 
     # Attach to process
     try:
-        pid = int(args.pid)
+        pid = args.pid
         if args.distkeygen:
             pid = get_pid('target/release/keygen_dispatcher')
         elif args.distprove:
             pid = get_pid('target/release/prove_dispatcher')
         else:
-            pid = get_pid('target/release/worker')
-        
+            #pid = get_pid('lsc')
+            './src/main' #./src/main
+            pid = get_pid(pid)
         print("Attaching to process {0}".format(pid))
         print("cpu count {}".format(psutil.cpu_count()))
         sprocess = None
