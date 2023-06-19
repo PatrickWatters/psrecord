@@ -66,8 +66,8 @@ def all_children(pr):
 def main():
 
     parser = argparse.ArgumentParser( description='Record CPU and memory usage for a process')
-    parser.add_argument("-pid","--pid",default=None, type=str,help='the process id or command')
-    parser.add_argument("-log","--log",default='output.txt', type=str, help='output the statistics to a file')
+    parser.add_argument("-pid","--pid",default='None', type=str,help='the process id or command')
+    parser.add_argument("-log","--log",default='psrecord.txt', type=str, help='output the statistics to a file')
     parser.add_argument("-plot","--plot",default='plot.png', type=str, help='output the statistics to a plot')
     parser.add_argument("-duration","--duration",default=None, type=float,help='how long to record for (in seconds). If not ''specified, the recording is continuous until ''the job exits.')
     
@@ -101,7 +101,8 @@ def main():
         else:
             #pid = get_pid('lsc')
             './src/main' #./src/main
-            pid = get_pid(pid)
+            #pid = get_pid(pid)
+            pid = int(pid)
         print("Attaching to process {0}".format(pid))
         print("cpu count {}".format(psutil.cpu_count()))
         sprocess = None
